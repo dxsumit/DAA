@@ -42,16 +42,16 @@ int main() {
       return 0;
    }
 
-   max_min obj(array, 5);
+   max_min obj(array, n);
    srand(time(0));
-   n = rand()%5;
+   int i = rand()%n;
 
    // creating random if no. is either max or min..
-   while(array[n] == obj.maximum || array[n] == obj.minimum) {
-         n = rand()%5;
+   while(array[i] == obj.maximum || array[i] == obj.minimum) {
+         i = rand()%n;
    }
 
-   cout << array[n] << " is our output which in neither MAXIMUM nor MINIMUM.";
+   cout << array[i] << " is our output which in neither MAXIMUM nor MINIMUM.";
 
    return 0;
 }
