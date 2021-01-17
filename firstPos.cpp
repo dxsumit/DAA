@@ -103,18 +103,18 @@ int main()
         cout<<arr1[i]<<" ";
     }
     cout<<endl;
-    time_point <high_resolution_clock> start,end1,end2,end3;
-    start=high_resolution_clock::now();
+    time_point <steady_clock> start,end1,end2,end3;
+    start=steady_clock::now();
     cout<<"The first -1 has been found at index "<<linearSearch(arr1)<<" using linear search."<<endl;
-    end1=high_resolution_clock::now();
+    end1=steady_clock::now();
     duration<double>elapsed=end1-start;
     cout<<"Process took:"<<elapsed.count()<<" s"<<endl;
     cout<<"The first -1 has been found at index "<<binarySearch(arr1)<<" using binary search."<<endl;
-    end2=high_resolution_clock::now();
+    end2=steady_clock::now();
     elapsed=end2-end1;
     cout<<"Process took:"<<elapsed.count()<<" s"<<endl;
     cout<<"The first -1 has been found at index "<<ternarySearch(arr1)<<" using ternary search."<<endl;
-    end3=high_resolution_clock::now();
+    end3=steady_clock::now();
     elapsed=end3-end2;
     cout<<"Process took:"<<elapsed.count()<<" s"<<endl;
 
