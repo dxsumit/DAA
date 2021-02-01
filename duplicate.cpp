@@ -37,7 +37,7 @@ class duplicate {
          sort(arr, arr+n);
 
          for(int i=0; i<n-1; i++) {
-            if(arr[i] == arr[i+1] && !search(dup_arr, arr[i]) ) {
+            if(arr[i] == arr[i+1] && !search(dup_arr, arr[i]) ) {  
                dup_arr.push_back(arr[i]);
                i++;
             }

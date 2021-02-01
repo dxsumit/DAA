@@ -1,35 +1,35 @@
 
 
-//   is subset with given sum problem....
-
+// subset sum problem.....
 
 
 #include <iostream>
+#include <vector>
 #include <cmath>
 
 using namespace std;
 
 class subsetSum {
    public:
-      void isSubsets(int arr[], int n, int sum) {
-         int this_sum, flag = 0;
-
+      void getSubsets(int arr[], int n, int sum) {
+         int this_sum;
          for(int i=0; i<pow(2.0, n); i++){
             this_sum = 0;
+            vector<int> current_subset;
+
             for(int j=0; j<n; j++) {
                if((i & (1<<j)) != 0) {  // getting current index status..
+                  current_subset.push_back(arr[j]);
                   this_sum += arr[j];
                }
             }
             // print
             if(this_sum == sum){
-               cout << "\n Found subset with given sum.. \n";
-               flag = 1;
-               break;
+               for(int i=0; i<current_subset.size(); i++) {
+                  cout<<current_subset[i] << " ";
+               }
+               cout << "\n";
             }
-         }
-         if(flag == 0) {
-            cout << "\n Could not found subset with given sum.. \n";
          }
       }
 };
@@ -49,7 +49,7 @@ int main() {
    cin >> sum;
 
    subsetSum obj;
-   obj.isSubsets(arr, n, sum);
+   obj.getSubsets(arr, n, sum);
 
    return 0;
 }
