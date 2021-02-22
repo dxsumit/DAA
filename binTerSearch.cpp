@@ -1,112 +1,190 @@
-#include <bits/stdc++.h>
+// recursive and iterative way of binary and ternary search..
+
+#include <iostream>
+#include <algorithm>
+
 using namespace std;
 
-class Compare
+class sorting
 {
-    public:
-        int compare(int ele1,int ele2,int c=__INT32_MAX__)
+private:
+    void swapping(int &a, int &b)
+    {
+        int temp;
+        temp = a;
+        a = b;
+        b = temp;
+    }
+
+public:
+    void bubbleSort(int array[], int size)
+    {
+        for (int i = 0; i < size; i++)
         {
-            if (c==0)
+            int swaps = 0;
+            for (int j = 0; j < size - i - 1; j++)
             {
-                int res=0;
-                if (ele1<0)
+                if (array[j] > array[j + 1])
                 {
-                    res++;
+                    swapping(array[j], array[j + 1]);
+                    swaps = 1;
                 }
-                if (ele2<0)
-                {
-                    res++;
-                }
-                return res;
             }
-            else if (c!=__INT32_MAX__)
+            if (!swaps)
+                break;
+        }
+    }
+};
+
+class searching : public sorting
+{
+public:
+    void binarySearch(int arr[], int n, int key)
+    {
+        int mid, start, end;
+        start = 0;
+        end = n;
+
+        while (end >= start)
+        {
+            mid = (start + end) / 2;
+            if (arr[mid] == key)
             {
-                if (ele1==c || ele2==c)
-                {
-                    return 1;
-                }
-                return 0;
+                cout << "  Iterative Way :: Element " << key << " is found in the given Array " << endl;
+                return;
+            }
+            if (arr[mid] < key)
+            {
+                start = mid + 1;
             }
             else
             {
-                return max(ele1,ele2);
+                end = mid - 1;
             }
         }
-};
+        cout << "  Iterative Way :: Element " << key << " is NOT found in the given Array " << endl;
+    }
 
-class findmax:public Compare
-{
-    private:
-    
-    public:
-        int oneway(vector<int> v1,int currentpos)
+    void recursion_binary(int arr[], int start, int end, int key)
+    {
+        if (end >= start)
         {
-            static int currentmax=v1[0];
-            currentmax=compare(currentmax,v1[currentpos]);
-            if (v1.size()-1!=currentpos)
+            int mid = (end + start) / 2;
+            if (arr[mid] == key)
             {
-                currentpos++;
-                oneway(v1,currentpos);
+                cout << "  Recursive Way :: Element " << key << " is found in the given Array " << endl;
+                return;
             }
-            return currentmax;
+            if (arr[mid] < key)
+            {
+                return recursion_binary(arr, mid + 1, end, key);
+            }
+            else
+            {
+                return recursion_binary(arr, start, mid - 1, key);
+            }
         }
+        cout << "  Recursive Way :: Element " << key << " is NOT found in the given Array " << endl;
+    }
 
-        int twoway(vector<int> v1,int startpos,int endpos)
+    void ternarySearch(int arr[], int n, int key)
+    {
+        int start, end, mid1, mid2;
+        start = 0;
+        end = n;
+
+        while (end >= start)
         {
-            if (startpos==endpos)
+            mid1=((2*start)+end)/3;
+            mid2=(start+(2*end))/3;
+
+            if (arr[mid1] == key)
             {
-                return v1[startpos];
+                cout << "  Iterative Way :: Element " << key << " is found in the given Array " << endl;
+                return;
             }
-            int mid;
-            mid=(startpos+endpos)/2;
-            return max(twoway(v1,startpos,mid),twoway(v1,mid+1,endpos));
+            if (arr[mid2] == key)
+            {
+                cout << "  Iterative Way :: Element " << key << " is found in the given Array " << endl;
+                return;
+            }
+            else if (arr[mid1] > key)
+            {
+                end = mid1 - 1;
+            }
+            else if (arr[mid2] < key)
+            {
+                start = mid2 + 1;
+            }
+            else
+            {
+                start = mid1 + 1;
+                end = mid2 - 1;
+            }
         }
-        
-        int kway(vector<int>v1,int k,int startpos,int endpos)
+        cout << "  Iterative Way :: Element " << key << " is NOT found in the given Array " << endl;
+    }
+
+    void recursion_ternary(int arr[], int start, int end, int key)
+    {
+        if (end >= start)
         {
-            static int globalmax=v1[0];
-            if (startpos==endpos)
+            int mid1,mid2;
+            mid1=((2*start)+end)/3;
+            mid2=(start+(2*end))/3;
+
+            if (arr[mid1] == key)
             {
-                return v1[startpos];
+                cout << "  Recursive Way :: Element " << key << " is found in the given Array " << endl;
+                return;
             }
-            // int div=ceil((double(startpos)+double(endpos))/k);
-            int div=(startpos+endpos)/k;
-            for (int i = 0; i < k; i++)
+            if (arr[mid2] == key)
             {
-                startpos=i*div;
-                endpos=(i+1)*div;
-                int tempmax=kway(v1,k,startpos,endpos);
-                if (tempmax>globalmax)
-                {
-                    globalmax=tempmax;
-                }
+                cout << "  Recursive Way :: Element " << key << " is found in the given Array " << endl;
+                return;
             }
-            return globalmax;            
-            
+            else if (arr[mid1] > key)
+            {
+                return recursion_ternary(arr, start, mid1 - 1, key);
+            }
+            else if (arr[mid2] < key)
+            {
+                return recursion_ternary(arr, mid2 + 1, end, key);
+            }
+            else
+            {
+                return recursion_ternary(arr, mid1 + 1, mid2 - 1, key);
+            }
         }
+        cout << "  Recursive Way :: Element " << key << " is NOT found in the given Array " << endl;
+    }
 };
 
 int main()
 {
-    vector<int> v1;
-    int input;
-    while (cin>>input)
+    int n;
+    cout << " Enter size of an Array : ";
+    cin >> n;
+    int arr[n];
+    for (int i = 0; i < n; i++)
     {
-        v1.push_back(input);
+        cout << " Enter the element : ";
+        cin >> arr[i];
     }
-    for (auto i = v1.begin(); i!=v1.end(); i++)
-    {
-        cout<<*i<<" ";
-    }
-    cout<<endl;
-    findmax fm1;
-    cout<<fm1.oneway(v1,0);
-    cout<<endl;
-    cout<<fm1.twoway(v1,0,v1.size()-1);
-    cout<<endl;
-    cout<<fm1.kway(v1,3,0,v1.size()-1);
-    
+    int key;
+    cout << "\n  Enter the key to find : ";
+    cin >> key;
+
+    searching obj; // class object..
+    obj.bubbleSort(arr, n);
+
+    cout << "\n Binary Search \n";
+    obj.binarySearch(arr, n - 1, key);
+    obj.recursion_binary(arr, 0, n - 1, key);
+
+    cout << "\n Ternary Search \n";
+    obj.ternarySearch(arr, n - 1, key);
+    obj.recursion_ternary(arr, 0, n - 1, key);
 
     return 0;
 }
-
