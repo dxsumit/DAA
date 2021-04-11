@@ -1,3 +1,6 @@
+
+// maximum number of activities are possible with given set of activities...  
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
